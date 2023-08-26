@@ -13,7 +13,9 @@ const auth = (req, res, next) => {
     });
   } else {
     if (
-      req.path === "/posts/" ||
+      ((req.path === "/posts" || req.path === "/posts/") &&
+        req.method === "GET") ||
+      (/^\/posts\/\w+$/i.test(req.path) && req.method === "GET") ||
       req.path === "/users/" ||
       req.path === "/users/email-verification" ||
       req.path === "/login"

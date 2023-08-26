@@ -31,6 +31,10 @@ const Post = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    dislikes: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   },
   {
     timestamps: false,
@@ -40,6 +44,7 @@ const Post = sequelize.define(
 Post.belongsTo(User, {
   foreignKey: "user_id",
   as: "User",
+  allowNull: true,
 });
 
 module.exports = { Post };

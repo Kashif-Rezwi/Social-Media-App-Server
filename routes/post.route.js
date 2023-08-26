@@ -90,17 +90,14 @@ postRouter.post("/", async (req, res) => {
 // deleting a post
 postRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.body;
   try {
-    const post = await Post.findOne({
-      where: { id, userId },
-    });
+    const postData = await Post.findByPk(id);
 
-    if (!post) {
-      return res.status(403).json("You can delete only your post!");
+    if (!postData) {
+      return res.status(403).json("Post not found!");
     }
 
-    await post.destroy();
+    await postData.destroy();
 
     return res.json("Post has been deleted!");
   } catch (err) {
@@ -113,21 +110,19 @@ postRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await Post.findOne({
-      where: { id },
-    });
+    const postData = await Post.findByPk(id);
 
-    if (!post) {
+    if (!postData) {
       return res.status(404).json("Post not found.");
     }
 
     const { content, image, updated_at } = req.body;
 
-    post.content = content;
-    post.image = image;
-    post.updated_at = updated_at;
+    postData.content = content;
+    postData.image = image;
+    postData.updated_at = updated_at;
 
-    await post.save();
+    await postData.save();
 
     return res.json("Post has been updated.");
   } catch (err) {
@@ -140,19 +135,15 @@ postRouter.patch("/:id/like", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await Post.findOne({
-      where: { id },
-    });
+    const postData = await Post.findByPk(id);
 
-    if (!post) {
+    if (!postData) {
       return res.status(404).json("Post not found.");
     }
 
-    const { like } = req.body;
+    postData.likes = postData.likes + 1;
 
-    post.like = like;
-
-    await post.save();
+    await postData.save();
 
     return res.json("Post like has been updated.");
   } catch (err) {
@@ -165,19 +156,15 @@ postRouter.patch("/:id/dislike", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await Post.findOne({
-      where: { id },
-    });
+    const postData = await Post.findByPk(id);
 
-    if (!post) {
+    if (!postData) {
       return res.status(404).json("Post not found.");
     }
 
-    const { dislike } = req.body;
+    postData.dislikes = postData.dislikes + 1;
 
-    post.dislike = dislike;
-
-    await post.save();
+    await postData.save();
 
     return res.json("Post dislike has been updated.");
   } catch (err) {
