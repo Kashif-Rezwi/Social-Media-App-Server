@@ -81,7 +81,7 @@ userRouter.post("/email-verification", async (req, res) => {
 });
 
 // getting user by id
-postRouter.get("/:id", async (req, res) => {
+userRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await User.findByPk(id);
@@ -100,7 +100,7 @@ postRouter.get("/:id", async (req, res) => {
 });
 
 // deleting a user
-postRouter.delete("/:id", async (req, res) => {
+userRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const userData = await User.findByPk(id);
@@ -117,8 +117,8 @@ postRouter.delete("/:id", async (req, res) => {
   }
 });
 
-// updating a post
-postRouter.put("/:id", async (req, res) => {
+// updating a user
+userRouter.put("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -130,16 +130,18 @@ postRouter.put("/:id", async (req, res) => {
 
     const { name, bio, image, updated_at } = req.body;
 
-    post.name = name;
-    post.bio = bio;
-    post.image = image;
-    post.updated_at = updated_at;
+    userData.name = name;
+    userData.bio = bio;
+    userData.image = image;
+    userData.updated_at = updated_at;
 
-    await post.save();
+    await userData.save();
 
-    return res.json("Post has been updated.");
+    return res.json("User has been updated.");
   } catch (err) {
-    return res.status(500).json("An error occurred while updating the post.");
+    return res.status(500).json("An error occurred while updating the user.", {
+      error: err.message,
+    });
   }
 });
 

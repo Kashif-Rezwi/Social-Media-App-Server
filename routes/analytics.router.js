@@ -54,3 +54,7 @@ analyticsRouter.get("/posts/top-liked", async (req, res) => {
       .json({ error: "An error occurred while fetching the post" });
   }
 });
+
+module.exports = {
+  analyticsRouter,
+};

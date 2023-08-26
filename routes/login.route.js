@@ -17,7 +17,8 @@ loginRouter.post("/", async (req, res) => {
           const token = jwt.sign({ UserID: userExists.id }, "social-media-app");
           res.send({
             status: "User signin successfully.",
-            userDetails: { ...userExists, token },
+            ...userExists.dataValues,
+            token,
           });
         } else {
           return res.send({ status: "Wrong Credentials!" });
