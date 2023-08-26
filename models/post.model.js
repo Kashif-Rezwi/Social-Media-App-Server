@@ -31,7 +31,7 @@ const Post = sequelize.define("Post", {
   },
   likes: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
 });
 

@@ -15,6 +15,7 @@ const Email_verification = sequelize.define("Email_verification", {
   otp: {
     type: DataTypes.INTEGER,
     allowNull: false,
+    unique: true,
   },
   created_at: {
     type: DataTypes.STRING,
